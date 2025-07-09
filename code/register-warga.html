@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Akun Warga</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .register-box {
+      background-color: #ffe6f2;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ffcde6;
+    }
+    button {
+      background-color: #ff8acb;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-box">
+    <h2>Daftar Warga</h2>
+    <input type="text" id="username" placeholder="Nama Warga" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="registerWarga()">Daftar</button>
+    <p>Sudah punya akun? <a href="login-warga.html">Login di sini</a></p>
+  </div>
+
+  <script>
+    function register() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        alert("Semua field wajib diisi.");
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      if (users.find(u => u.username === username)) {
+        alert("Username sudah digunakan!");
+        return;
+      }
+
+      users.push({ username, password, role: "warga" });
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("userRole", "warga");
+      localStorage.setItem("username", username);
+      alert("Akun warga berhasil dibuat!");
+      window.location.href = "dashboard-warga.html";
+    }
+  </script>
+</body>
+</html>
