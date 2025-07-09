@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Pemasukan</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff6f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      position: fixed;
+      background-color: #f8d2f0;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h1 {
+      font-size: 24px;
+      color: #b84fa4;
+    }
+
+    .sidebar a {
+      display: block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #b84fa4;
+      font-weight: bold;
+    }
+
+    .sidebar a.active {
+      background-color: #fbb1dd;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+
+    .main {
+      margin-left: 240px;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #d76c8c;
+    }
+
+    form {
+      background-color: #ffe6f2;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #7e4a6d;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ffcde6;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      background-color: #ff8acb;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e570b3;
+    }
+
+    .success {
+      background-color: #dff0d8;
+      color: #3c763d;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h1>KeuDesa</h1>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="#" class="active">Pemasukan</a>
+    <a href="pengeluaran.html">Pengeluaran</a>
+    <a href="rekap.html">Rekap</a>
+    <a href="pengaturan.html">Pengaturan</a>
+  </div>
+
+  <div class="main">
+    <h2>Input Pemasukan Desa</h2>
+    <form id="formPemasukan">
+      <label for="sumber">Sumber Dana</label>
+      <input type="text" id="sumber" required placeholder="Contoh: Dana Desa, Bantuan Provinsi" />
+
+      <label for="jumlah">Jumlah (Rp / USD)</label>
+      <input type="number" id="jumlah" required />
+
+      <label for="tanggal">Tanggal</label>
+      <input type="date" id="tanggal" required />
+
+      <button type="submit">Simpan</button>
+      <div class="success" id="suksesPesan">✅ Data pemasukan berhasil disimpan!</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('formPemasukan');
+    const pesan = document.getElementById('suksesPesan');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const sumber = document.getElementById('sumber').value;
+      const jumlah = parseInt(document.getElementById('jumlah').value);
+      const tanggal = document.getElementById('tanggal').value;
+
+      const dataBaru = { sumber, jumlah, tanggal };
+
+      let dataPemasukan = JSON.parse(localStorage.getItem('pemasukan')) || [];
+      dataPemasukan.push(dataBaru);
+      localStorage.setItem('pemasukan', JSON.stringify(dataPemasukan));
+
+      form.reset();
+      pesan.style.display = 'block';
+      setTimeout(() => pesan.style.display = 'none', 3000);
+    });
+  </script>
+  
+</body>
+</html>

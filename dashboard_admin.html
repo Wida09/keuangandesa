@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #a7bdeb;
+      padding: 30px;
+    }
+
+    .container {
+      background-color: #fff0f5;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #c84e9c;
+    }
+
+    .logout-btn {
+      background-color: #ff8acb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+  <script>
+    // Proteksi akses: hanya admin
+    const role = localStorage.getItem("userRole");
+    if (role !== "admin") {
+      alert("Akses ditolak! Silakan login sebagai admin.");
+      window.location.href = "login-admin.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <h1>Selamat Datang, Admin <span id="adminName"></span> 👋</h1>
+    <p>Ini adalah halaman dashboard khusus untuk admin.</p>
+    <!-- Tambahkan konten admin di sini -->
+  </div>
+
+  <script>
+    document.getElementById("adminName").innerText = localStorage.getItem("username");
+
+    function logout() {
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("username");
+      window.location.href = "login-admin.html";
+    }
+  </script>
+</body>
+</html> 
